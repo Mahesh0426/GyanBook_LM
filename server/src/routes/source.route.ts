@@ -1,0 +1,10 @@
+import { Router } from "express";
+import { asyncHandler } from "../utils/async-handlers.js";
+
+export const sourceRoutes = Router({ mergeParams: true });
+
+sourceRoutes.get("/", asyncHandler(listSources));
+sourceRoutes.post("/", asyncHandler(createSource));
+// sourceRoutes.post("/bulk-delete", asyncHandler(bulkDeleteSources));
+// sourceRoutes.get("/:sourceId", asyncHandler(getSource));
+// sourceRoutes.delete("/:sourceId", asyncHandler(deleteSource));
