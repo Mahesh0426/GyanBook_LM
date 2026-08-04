@@ -1,0 +1,21 @@
+services:
+  postgres:
+    image: pgvector/pgvector:pg16
+    container_name: gyanbook-postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: gyanbook
+    ports:
+      - "5434:5432"
+    volumes:
+      - gyanbook_pg_data:/var/lib/postgresql/data
+
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d gyanbook"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  gyanbook_pg_data:
