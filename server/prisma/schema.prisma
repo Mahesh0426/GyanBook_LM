@@ -17,14 +17,15 @@ model Test {
   title String
 }
 
+// model for user - it stores all the user details
 model User {
-  id            String    @id
+  id            String      @id
   name          String
   email         String
-  emailVerified Boolean   @default(false)
+  emailVerified Boolean     @default(false)
   image         String?
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
   sessions      Session[]
   accounts      Account[]
   workspaces    Workspace[]
@@ -33,6 +34,7 @@ model User {
   @@map("user")
 }
 
+// model for session - it contain all session of logged in user | cookie based session
 model Session {
   id        String   @id
   expiresAt DateTime
@@ -49,6 +51,7 @@ model Session {
   @@map("session")
 }
 
+// model for account -  it contain all auth data
 model Account {
   id                    String    @id
   accountId             String
@@ -69,6 +72,7 @@ model Account {
   @@map("account")
 }
 
+//model for verification - it does user verification
 model Verification {
   id         String   @id
   identifier String
@@ -81,21 +85,74 @@ model Verification {
   @@map("verification")
 }
 
-
+// model for workspace - this schema for creating workspace like in notebookLLM
 model Workspace {
-  id            String         @id @default(cuid())
-  userId        String
-  title         String
-  description   String?
-  icon          String?
-  defaultModel  String         @default("gpt-4o-mini")
-  createdAt     DateTime       @default(now())
-  updatedAt     DateTime       @updatedAt
-  user          User           @relation(fields: [userId], references: [id], onDelete: Cascade)
-  // sources       Source[]
+  id           String   @id @default(cuid())
+  userId       String
+  title        String
+  description  String?
+  icon         String?
+  defaultModel String   @default("gpt-4o-mini")
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  sources      Source[]
 
   @@index([userId])
   @@map("workspace")
 }
 
+//enum for source type
+enum SourceType {
+  PDF
+  WEBSITE
+  YOUTUBE
+  TEXT
+  MARKDOWN
+}
 
+//status of source
+enum SourceStatus {
+  PENDING
+  PROCESSING
+  READY
+  FAILED
+}
+
+// model for source - it allow to upload different types of source to the workspace
+// example : pdf, website, youtube video, text, markdown
+model Source {
+  id          String        @id @default(cuid())
+  workspaceId String
+  type        SourceType
+  title       String
+  content     String?
+  url         String?
+  status      SourceStatus  @default(PENDING)
+  metadata    Json?
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  workspace   Workspace     @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  chunks      SourceChunk[]
+
+  @@index([workspaceId])
+  @@index([workspaceId, type])
+  @@index([workspaceId, status])
+  @@map("source")
+}
+
+// model for source chunk - it will store chunks of source uploaded by user
+model SourceChunk {
+  id         String   @id @default(cuid())
+  sourceId   String
+  index      Int
+  content    String
+  tokenCount Int?
+  metadata   Json?
+  createdAt  DateTime @default(now())
+  source     Source   @relation(fields: [sourceId], references: [id], onDelete: Cascade)
+
+  @@unique([sourceId, index])
+  @@index([sourceId])
+  @@map("source_chunk")
+}

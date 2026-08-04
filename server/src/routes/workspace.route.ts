@@ -7,7 +7,7 @@ import {
   getWorkspace,
   listWorkspaces,
   updateWorkspace,
-} from "../controllers/woekspace.controller.js";
+} from "../controllers/workspace.controller.js";
 
 export const workspaceRoutes = Router();
 
