@@ -17,6 +17,7 @@ import {
 } from "../validators/source.validator.js";
 import { getWorkspaceByIdForUser } from "./workspace.services.js";
 import { NotFoundError } from "../types/app-error.js";
+import { enqueueSourceProcessing } from "../lib/source-events.js";
 
 /**
  * Ensure the user has access to the workspace by delegating to workspace services.
@@ -31,6 +32,11 @@ async function createAndProcessSource(
   data: Parameters<typeof createSourceRecord>[0],
 ) {
   const source = await createSourceRecord(data);
+
+  await enqueueSourceProcessing({
+    sourceId: source.id,
+    workspaceId: source.workspaceId,
+  });
 
   return source;
 }

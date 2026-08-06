@@ -6,6 +6,9 @@ import { toNodeHandler } from "better-auth/node";
 import { auth } from "./lib/auth.js";
 import { registerRoutes } from "./routes/index.js";
 import { errorHandler } from "./middleware/error-handler.middleware.js";
+import { inngest } from "./inngest/client.js";
+import { functions } from "./inngest/index.js";
+import { serve } from "inngest/express";
 
 const app = express();
 const PORT = process.env.PORT || 8001;
@@ -29,6 +32,9 @@ app.use(express.urlencoded({ extended: true }));
 
 //morgan for logging
 app.use(morgan("dev"));
+
+//ingest routes
+app.use("/api/inngest", serve({ client: inngest, functions }));
 
 //sample route
 app.get("/", (req, res) => res.send("<h2>App is up</h2>"));
