@@ -1,5 +1,6 @@
 import { findChunksBySourceId } from "../repository/source-chunk.repository.js";
 import { findSourceById } from "../repository/source.repository.js";
+import { summarizeConversationById } from "../services/conversation-memory.services.js";
 import {
   chunkSourceContent,
   embedAndIndexSource,
