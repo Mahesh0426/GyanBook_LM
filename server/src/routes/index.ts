@@ -1,10 +1,15 @@
 import type { Express } from "express";
+import { artifactRoutes } from "./artifact.route.js";
+import { chatRoutes, conversationRoutes } from "./chat.route.js";
 import { memoryRoutes } from "./memory.route.js";
 import { sourceRoutes } from "./source.route.js";
 import { workspaceRoutes } from "./workspace.route.js";
 
 export function registerRoutes(app: Express): void {
   workspaceRoutes.use("/:workspaceId/sources", sourceRoutes);
+  workspaceRoutes.use("/:workspaceId/conversations", conversationRoutes);
+  workspaceRoutes.use("/:workspaceId/chat", chatRoutes);
+  workspaceRoutes.use("/:workspaceId/artifacts", artifactRoutes);
   app.use("/api/workspaces", workspaceRoutes);
   app.use("/api/memory", memoryRoutes);
 }
