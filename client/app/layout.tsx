@@ -26,8 +26,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Chaibook",
-  description: "Chat with your books",
+  title: "GyanBookLM",
+  description: "Chat with your Pdf documents using LLMs",
 };
 
 export default function RootLayout({
