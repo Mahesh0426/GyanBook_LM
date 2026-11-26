@@ -34,7 +34,7 @@ import {
 } from "lucide-react";
 import "@xyflow/react/dist/style.css";
 import { Button } from "@/components/ui/button";
-import { workspaceRoutes } from "@/features/workspaces/lib/routes";
+import { workspaceRoutes } from "@/features/workspace/lib/routes";
 import type { MindMapEdge, MindMapNode } from "../../lib/types";
 
 const NODE_WIDTH = 200;

@@ -6,7 +6,7 @@ import prisma from "./db.js"; // it will create |  Prisma Client -->PostgreSQL
 
 // FE --> Express Routes --> Auth Logic  --> Db
 
-const clientUrl = process.env.BETTER_AUTH_URL || `http://localhost:3001`;
+const clientUrl = process.env.BETTER_AUTH_URL || `http://localhost:3000`;
 
 // Create Authentication instance
 export const auth = betterAuth({

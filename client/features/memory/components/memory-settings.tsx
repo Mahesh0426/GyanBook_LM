@@ -13,7 +13,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
-import { workspaceRoutes } from "@/features/workspaces/lib/routes";
+import { workspaceRoutes } from "@/features/workspace/lib/routes";
 import {
   useCreateMemory,
   useDeleteMemory,
@@ -73,7 +73,7 @@ export function MemorySettings() {
             <h1 className="font-heading text-2xl font-semibold">Memory</h1>
           </div>
           <p className="max-w-xl text-sm text-muted-foreground">
-            Powered by Mem0. Chaibook learns stable facts from your chats and
+            Powered by Mem0. GyanBook learns stable facts from your chats and
             uses semantic search to recall them in future conversations.
           </p>
         </div>

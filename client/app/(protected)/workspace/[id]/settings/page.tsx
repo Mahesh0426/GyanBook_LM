@@ -1,8 +1,8 @@
 import { notFound } from "next/navigation";
 import { requireAuth } from "@/features/auth";
-import { getWorkspaceOrNull } from "@/features/workspaces/lib/workspace-server";
-import { WorkspaceShell } from "@/features/workspaces";
-import { WorkspaceSettingsForm } from "@/features/workspaces/components/workspace-settings-form";
+import { getWorkspaceOrNull } from "@/features/workspace/lib/workspace-server";
+import { WorkspaceShell } from "@/features/workspace";
+import { WorkspaceSettingsForm } from "@/features/workspace/components/workspace-settings-form";
 
 type WorkspaceSettingsPageProps = {
     params: Promise<{ id: string }>;

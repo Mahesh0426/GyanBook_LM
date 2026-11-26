@@ -49,7 +49,7 @@ import { ChatMessageBody } from "./chat-message-body";
 import { CitationSources } from "./citation-sources";
 import { ChatComposer } from "./chat-composer";
 import type { ChatCitation } from "../lib/types";
-import { workspaceRoutes } from "@/features/workspaces/lib/routes";
+import { workspaceRoutes } from "@/features/workspace/lib/routes";
 import { useChatPreferences } from "../stores/chat-preferences";
 import {
     downloadMarkdown,

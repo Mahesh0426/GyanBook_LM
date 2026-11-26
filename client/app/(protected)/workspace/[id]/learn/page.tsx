@@ -1,8 +1,8 @@
 import { notFound } from "next/navigation";
 import { requireAuth } from "@/features/auth";
 import { LearnHub } from "@/features/learn";
-import { getWorkspaceOrNull } from "@/features/workspaces/lib/workspace-server";
-import { WorkspaceShell } from "@/features/workspaces";
+import { getWorkspaceOrNull } from "@/features/workspace/lib/workspace-server";
+import { WorkspaceShell } from "@/features/workspace";
 
 type LearnPageProps = {
     params: Promise<{ id: string }>;

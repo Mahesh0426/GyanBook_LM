@@ -2,8 +2,8 @@ import { Suspense } from "react";
 import { notFound } from "next/navigation";
 import { requireAuth } from "@/features/auth";
 import { WorkspaceChat } from "@/features/chat";
-import { getWorkspaceOrNull } from "@/features/workspaces/lib/workspace-server";
-import { WorkspaceShell } from "@/features/workspaces";
+import { getWorkspaceOrNull } from "@/features/workspace/lib/workspace-server";
+import { WorkspaceShell } from "@/features/workspace";
 
 type WorkspacePageProps = {
     params: Promise<{ id: string }>;

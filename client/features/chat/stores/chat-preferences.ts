@@ -7,69 +7,66 @@ export const CHAT_MODELS = ["gpt-4o-mini", "gpt-4o"] as const;
 export type ChatModelId = (typeof CHAT_MODELS)[number];
 
 export const CHAT_MODEL_LABELS: Record<ChatModelId, string> = {
-    "gpt-4o-mini": "GPT-4o mini",
-    "gpt-4o": "GPT-4o",
+  "gpt-4o-mini": "GPT-4o mini",
+  "gpt-4o": "GPT-4o",
 };
 
 type WorkspaceChatPrefs = {
-    model: ChatModelId;
-    webSearch: boolean;
+  model: ChatModelId;
+  webSearch: boolean;
 };
 
 type ChatPreferencesState = {
-    byWorkspace: Record<string, WorkspaceChatPrefs>;
-    getPrefs: (
-        workspaceId: string,
-        defaultModel?: string,
-    ) => WorkspaceChatPrefs;
-    setModel: (workspaceId: string, model: ChatModelId) => void;
-    setWebSearch: (workspaceId: string, enabled: boolean) => void;
+  byWorkspace: Record<string, WorkspaceChatPrefs>;
+  getPrefs: (workspaceId: string, defaultModel?: string) => WorkspaceChatPrefs;
+  setModel: (workspaceId: string, model: ChatModelId) => void;
+  setWebSearch: (workspaceId: string, enabled: boolean) => void;
 };
 
 function resolveModel(model?: string): ChatModelId {
-    if (model && CHAT_MODELS.includes(model as ChatModelId)) {
-        return model as ChatModelId;
-    }
+  if (model && CHAT_MODELS.includes(model as ChatModelId)) {
+    return model as ChatModelId;
+  }
 
-    return "gpt-4o-mini";
+  return "gpt-4o-mini";
 }
-
+//to store the chat preferences for each workspace. It is persisted in local storage.
 export const useChatPreferences = create<ChatPreferencesState>()(
-    persist(
-        (set, get) => ({
-            byWorkspace: {},
-            getPrefs: (workspaceId, defaultModel) => {
-                const existing = get().byWorkspace[workspaceId];
-                if (existing) {
-                    return existing;
-                }
+  persist(
+    (set, get) => ({
+      byWorkspace: {},
+      getPrefs: (workspaceId, defaultModel) => {
+        const existing = get().byWorkspace[workspaceId];
+        if (existing) {
+          return existing;
+        }
 
-                return {
-                    model: resolveModel(defaultModel),
-                    webSearch: false,
-                };
+        return {
+          model: resolveModel(defaultModel),
+          webSearch: false,
+        };
+      },
+      setModel: (workspaceId, model) =>
+        set((state) => ({
+          byWorkspace: {
+            ...state.byWorkspace,
+            [workspaceId]: {
+              ...state.getPrefs(workspaceId),
+              model,
             },
-            setModel: (workspaceId, model) =>
-                set((state) => ({
-                    byWorkspace: {
-                        ...state.byWorkspace,
-                        [workspaceId]: {
-                            ...state.getPrefs(workspaceId),
-                            model,
-                        },
-                    },
-                })),
-            setWebSearch: (workspaceId, webSearch) =>
-                set((state) => ({
-                    byWorkspace: {
-                        ...state.byWorkspace,
-                        [workspaceId]: {
-                            ...state.getPrefs(workspaceId),
-                            webSearch,
-                        },
-                    },
-                })),
-        }),
-        { name: "chaibook-chat-preferences" },
-    ),
+          },
+        })),
+      setWebSearch: (workspaceId, webSearch) =>
+        set((state) => ({
+          byWorkspace: {
+            ...state.byWorkspace,
+            [workspaceId]: {
+              ...state.getPrefs(workspaceId),
+              webSearch,
+            },
+          },
+        })),
+    }),
+    { name: "gyanbook-chat-preferences" },
+  ),
 );

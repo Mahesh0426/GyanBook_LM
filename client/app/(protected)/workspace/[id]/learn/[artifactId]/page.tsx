@@ -1,8 +1,8 @@
 import { notFound } from "next/navigation";
 import { requireAuth } from "@/features/auth";
 import { ArtifactDetail } from "@/features/learn";
-import { getWorkspaceOrNull } from "@/features/workspaces/lib/workspace-server";
-import { WorkspaceShell } from "@/features/workspaces";
+import { getWorkspaceOrNull } from "@/features/workspace/lib/workspace-server";
+import { WorkspaceShell } from "@/features/workspace";
 
 type ArtifactPageProps = {
     params: Promise<{ id: string; artifactId: string }>;
